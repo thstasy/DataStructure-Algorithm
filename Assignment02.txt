@@ -1,3 +1,59 @@
+TASKS
+(15 points) Give at least two examples (in real life and in programming) and a short description for:
+Stacks
+Queues
+Deques
+ 
+
+2. (25 points) Write a function that returns a Boolean as to whether a string has balanced braces. You may ignore non-bracket characters. For our purposes, the following are bracket characters:
+
+(){}[]
+For example, this function should return True for the following: 
+
+[ ]
+
+{}{}[]()
+
+[{()}]
+
+(()[[[()({})]]])
+
+It should return False for the following:
+
+[ ] [
+
+{{}[](})
+
+[{)}]
+
+(()[()({})]]])
+
+ 
+
+3. (35 points) Fully implement the Deque data structure (you may choose either a static or dynamic implementation) using an array.  Do not use any built-in methods except for the index operator. Also, do not simply write a wrapper to the built-in Deque class.
+
+It should have the following methods:
+
+append_left(element)
+append_right(element)
+pop_left()
+pop_right()
+peek_left()
+peek_right()
+get_count()
+It may also be helpful to implement a print method to display the contents of the deque in the correct order.
+
+Make sure to test your code, especially for tricky situations.
+
+ 
+
+4. (25 points) Write a recursive binary search function to search for an element in an array. Assume the elements in the array are sorted.
+
+It should return the index of the element and return -1 if it is not found.
+
+
+===============================================================================================================================================
+
 #TASK 1
 
 Stacks:
