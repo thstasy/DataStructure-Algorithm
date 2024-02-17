@@ -1,0 +1,37 @@
+##Task 5
+
+Problem Statement:
+We have a sorted array that has been rotated circularly. Our task is to find the index of the largest value in this rotated array.
+
+Example:
+
+Let's take an array [4, 5, 1, 2, 3]. This array is sorted in ascending order, but it has been rotated to the right by 2 positions. The largest value in this array is 5, and its index is 1.
+
+Solution Approach:
+The provided solution uses a strategy called binary search to efficiently find the index of the largest value.
+
+Here's how it works:
+
+Initialization:
+
+We start with two pointers, left and right, which initially point to the start and end of the array, respectively.
+Binary Search:
+
+We repeatedly divide the array into halves and examine the middle element (mid).
+If rotatedArray[mid] is greater than rotatedArray[mid + 1], it means rotatedArray[mid] is the largest value, and its index is mid + 1. This is because the array is sorted, and the next element after rotatedArray[mid] would be smaller if it weren't the largest.
+If rotatedArray[mid] is greater than or equal to rotatedArray[left], the rotation point is on the right side of mid, so we update left to mid + 1.
+Otherwise, the rotation point is on the left side of mid, so we update right to mid.
+Termination:
+
+We continue this process until left and right pointers converge, indicating that we have found the largest value.
+Return:
+
+Once the pointers converge, left will represent the index of the largest value.
+Why This Solution Works:
+
+The binary search approach allows us to efficiently narrow down the search space.
+By comparing elements at different positions, we can determine whether the rotation point lies to the left or right of the midpoint, enabling us to adjust our search accordingly.
+Key Points to Remember:
+
+Binary search is a technique used to efficiently search a sorted array by repeatedly dividing the search interval in half.
+The algorithm provided effectively adapts binary search to handle rotated arrays, enabling us to find the index of the largest value efficiently.
