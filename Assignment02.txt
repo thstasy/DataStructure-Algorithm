@@ -348,6 +348,34 @@ public class Deque {
 //This implementation of the Deque data structure maintains an array to store elements, along with front and rear pointers to keep track of //the deque's boundaries. It includes methods for appending elements to both ends of the deque, popping elements from both ends, peeking at //the elements without removing them, getting the count of elements in the deque, checking if the deque is empty or full, and printing the //contents of the deque. The implementation ensures that the array is used without any built-in methods except for the index operator.
 
 
+Here's the explanation line by line:
+
+if (isEmpty()) {
+
+This condition checks if the deque is empty.
+If the deque is empty, it means there are no elements in the deque.
+In that case, both the front and rear pointers need to be set to the beginning of the array, which is index 0.
+front = 0; sets the front pointer to the beginning of the array.
+rear = 0; sets the rear pointer to the beginning of the array as well.
+else if (front == 0) {
+
+If the deque is not empty, this condition checks if the front pointer is at index 0.
+If front is at index 0, it means that the front of the deque has reached the beginning of the array.
+In this case, when adding an element to the front, we need to wrap around to the end of the array to maintain the circular behavior of the deque.
+front = capacity - 1; sets the front pointer to the last index of the array (capacity - 1), effectively wrapping around to the end of the array.
+else {
+
+If the deque is not empty and front is not at index 0, it means there is still space available at the front of the deque.
+In this case, we decrement the front pointer to move it towards the beginning of the array.
+front--; decrements the front pointer by one, effectively moving it towards the beginning of the array.
+deque[front] = element;
+
+Once the correct position for the new element is determined (either at the front or after wrapping around), we assign the element to the position indicated by the front pointer in the deque array.
+size++;
+
+Finally, we increment the size of the deque to reflect the addition of the new element.
+This code snippet ensures that elements are correctly added to the front of the deque, handling scenarios where the deque is empty, the front pointer is at the beginning of the array, or there is space available at the front of the deque. It also ensures proper wrap-around behavior when adding elements to the front of the deque.
+================================================================================================================================================
 
 #TASK 4
 
