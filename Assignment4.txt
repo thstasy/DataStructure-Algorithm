@@ -91,8 +91,7 @@ In the main method, we create a doubly linked list, insert elements, print the o
 
 
 
-2. /* Write a function to reverse the elements in a doubly linked list. Do not simply print it out. It must have the references correctly set in reversed order.
-Also, write a print method – this should help with debugging.*/
+2. /* Write a function that takes two linked list and outputs a union of these two linked lists. Make it as efficient as possible. You can assume that each list consists of unique numbers and are not necessarily sorted. Also, the order of the output is not significant.*/
 
 
 import java.util.HashSet;
