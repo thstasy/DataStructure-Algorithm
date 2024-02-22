@@ -1,0 +1,220 @@
+TASK 1. 
+/* Write a depth first search function that accepts a starting vertex and an ending vertex. If the ending vertex is found, It should also return the path of the search. */
+
+import java.util.*;
+
+public class Graph {
+    private int V;
+    private LinkedList<Integer> adj[];
+
+    public Graph(int v) {
+        V = v;
+        adj = new LinkedList[v];
+        for (int i = 0; i < v; ++i)
+            adj[i] = new LinkedList();
+    }
+
+    void addEdge(int v, int w) {
+        adj[v].add(w); // Add w to v's list.
+    }
+
+    boolean DFSUtil(int v, int end, boolean visited[], Stack<Integer> path) {
+        visited[v] = true;
+        path.push(v);
+
+        if (v == end)
+            return true;
+
+        Iterator<Integer> i = adj[v].listIterator();
+        while (i.hasNext()) {
+            int n = i.next();
+            if (!visited[n]) {
+                if (DFSUtil(n, end, visited, path))
+                    return true;
+            }
+        }
+
+        path.pop(); // Backtrack
+        return false;
+    }
+
+    // Depth first search from a given start vertex to an end vertex
+    boolean DFS(int start, int end) {
+        boolean visited[] = new boolean[V];
+        Stack<Integer> path = new Stack<>();
+
+        // Call the recursive helper function to perform DFS traversal
+        boolean found = DFSUtil(start, end, visited, path);
+
+        if (found) {
+            System.out.println("Path from " + start + " to " + end + ": " + path);
+        } else {
+            System.out.println("Path from " + start + " to " + end + " not found.");
+        }
+
+        return found;
+    }
+
+    public static void main(String args[]) {
+        Graph g = new Graph(4);
+        g.addEdge(0, 1);
+        g.addEdge(0, 2);
+        g.addEdge(1, 2);
+        g.addEdge(2, 0);
+        g.addEdge(2, 3);
+        g.addEdge(3, 3);
+
+        int startVertex = 1;
+        int endVertex = 3;
+        g.DFS(startVertex, endVertex);
+    }
+}
+
+/* This code defines a Graph class that represents a graph using adjacency lists. The DFS function performs a depth-first search from a given start vertex to an end vertex, returning true if the end vertex is found along with the path. The DFSUtil function is a recursive helper function for DFS traversal. */
+
+
+TASK 2.
+/* Implement a breadth first search function that accepts a starting vertex and an ending vertex of a graph. This time, assume that the graph is implemented using an adjacency matrix. */
+
+import java.util.*;
+
+public class Graph {
+    private int V; // Number of vertices
+    private int[][] adjMatrix;
+
+    public Graph(int v) {
+        V = v;
+        adjMatrix = new int[V][V];
+    }
+
+    void addEdge(int v, int w) {
+        adjMatrix[v][w] = 1;
+        adjMatrix[w][v] = 1;
+    }
+
+    // Breadth first search from a given start vertex to an end vertex
+    boolean BFS(int start, int end) {
+        boolean visited[] = new boolean[V];
+        LinkedList<Integer> queue = new LinkedList<>();
+
+        visited[start] = true;
+        queue.add(start);
+
+        while (queue.size() != 0) {
+            start = queue.poll();
+
+            if (start == end) {
+                System.out.println("Path from " + start + " to " + end + " found.");
+                return true;
+            }
+
+            for (int i = 0; i < V; i++) {
+                if (adjMatrix[start][i] == 1 && !visited[i]) {
+                    visited[i] = true;
+                    queue.add(i);
+                }
+            }
+        }
+
+        System.out.println("Path from " + start + " to " + end + " not found.");
+        return false;
+    }
+
+    public static void main(String args[]) {
+        Graph g = new Graph(4);
+        g.addEdge(0, 1);
+        g.addEdge(0, 2);
+        g.addEdge(1, 2);
+        g.addEdge(2, 0);
+        g.addEdge(2, 3);
+        g.addEdge(3, 3);
+
+        int startVertex = 1;
+        int endVertex = 3;
+        g.BFS(startVertex, endVertex);
+    }
+}
+
+
+/* The Graph class represents a graph using an adjacency matrix.
+The addEdge method is used to add edges to the graph.
+The BFS method performs a breadth-first search from a given start vertex to an end vertex. It uses a queue for traversal.
+The algorithm marks visited vertices and adds adjacent vertices to the queue until it finds the end vertex or exhausts all possibilities. */
+
+
+TASK 3. 
+Why does Djikstra's Algorithm NOT work for graphs with negative weights?
+
+Dijkstra's algorithm relies on the assumption that all edge weights are non-negative. It selects vertices based on the current shortest path found from the source vertex. Negative weights can lead the algorithm to choose paths that seem shorter but may not be optimal. This violates the greedy nature of Dijkstra's algorithm and can result in incorrect shortest path calculations. To handle negative weights, other algorithms like the Bellman-Ford algorithm are more suitable.
+
+Task 4.
+/* Write a function that accepts a directed acyclic graph (DAG) and a path. It should return whether the path is valid or not. */
+
+To check whether a given path is valid in a directed acyclic graph (DAG), we need to ensure that each edge in the path follows the direction of the graph and that there are no cycles in the path. We can implement this check by iterating through the vertices and verifying that each edge exists in the graph and follows the specified path.
+
+import java.util.*;
+
+public class DAGValidation {
+    private int V; // Number of vertices
+    private LinkedList<Integer> adj[];
+
+    public DAGValidation(int v) {
+        V = v;
+        adj = new LinkedList[v];
+        for (int i = 0; i < v; ++i)
+            adj[i] = new LinkedList();
+    }
+
+    void addEdge(int v, int w) {
+        adj[v].add(w); // Add w to v's list.
+    }
+
+    boolean isValidPath(List<Integer> path) {
+        // Check if the path is empty or has a single vertex
+        if (path == null || path.size() <= 1)
+            return false;
+
+        for (int i = 0; i < path.size() - 1; i++) {
+            int currentVertex = path.get(i);
+            int nextVertex = path.get(i + 1);
+
+            // Check if there's an edge from currentVertex to nextVertex
+            if (!adj[currentVertex].contains(nextVertex))
+                return false;
+
+            // Check if there's a cycle in the path
+            if (i != 0 && path.subList(0, i).contains(nextVertex))
+                return false;
+        }
+
+        return true;
+    }
+
+    public static void main(String args[]) {
+        DAGValidation graph = new DAGValidation(6);
+        graph.addEdge(0, 1);
+        graph.addEdge(0, 2);
+        graph.addEdge(1, 3);
+        graph.addEdge(2, 3);
+        graph.addEdge(3, 4);
+        graph.addEdge(4, 5);
+
+        List<Integer> validPath = Arrays.asList(0, 1, 3, 4, 5);
+        List<Integer> invalidPath = Arrays.asList(0, 2, 3, 4);
+
+        System.out.println("Is valid path valid? " + graph.isValidPath(validPath)); // true
+        System.out.println("Is invalid path valid? " + graph.isValidPath(invalidPath)); // false
+    }
+}
+
+
+/*
+In this code:
+
+We define a DAGValidation class to represent a directed acyclic graph (DAG) using adjacency lists.
+The addEdge method adds edges to the graph.
+The isValidPath method checks whether a given path is valid in the DAG. It ensures that each consecutive pair of vertices in the path forms an edge in the graph and that there are no cycles in the path.
+We test the function with a valid and an invalid path to demonstrate its correctness.
+*/
+
+
